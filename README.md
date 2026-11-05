@@ -32,8 +32,18 @@ A window titled "Basic Calculator Program" opens. Click the buttons to build a s
 
 The program needs a screen to draw its window, so it will not open on a server or other machine with no display.
 
+## Run it on GitHub (no install needed)
+
+1. Open the **Actions** tab.
+2. Choose **Run calculator** on the left, then **Run workflow**.
+3. After about a minute, open [`results/RESULTS.md`](results/RESULTS.md).
+
+GitHub cannot show a live window in the browser, so the workflow starts the real `calculator.py` window on a virtual screen, presses its buttons, and saves an animation, screenshots and a pass/fail table to the `results/` folder.
+
 ## Files
 
 | File | What it is |
 |---|---|
 | `calculator.py` | The calculator program |
+| `gui_demo.py` | Runs `calculator.py` on a virtual screen, presses its buttons and saves screenshots |
+| `.github/workflows/run.yml` | The **Run calculator** workflow |

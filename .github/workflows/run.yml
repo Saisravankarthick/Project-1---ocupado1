@@ -1,0 +1,39 @@
+name: Run calculator
+
+# Actions tab -> "Run calculator" -> Run workflow
+# Starts calculator.py (the real window, on a virtual screen), presses its buttons and commits
+# screenshots, an animation and a report to the results/ folder.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install a virtual screen, tkinter and ImageMagick
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb python3-tk imagemagick
+      - name: Run the calculator with its window
+        run: |
+          xvfb-run -a -s "-screen 0 560x620x24" python3 gui_demo.py
+      - name: Show the report in the run summary
+        if: always()
+        run: |
+          [ -f results/RESULTS.md ] && sed 's#<img[^>]*>#(see results/ folder)#g' results/RESULTS.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A results
+          if git diff --cached --quiet; then echo "No changes."; else
+            git commit -m "Update calculator GUI results"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
