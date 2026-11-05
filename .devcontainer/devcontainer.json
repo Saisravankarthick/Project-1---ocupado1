@@ -1,0 +1,17 @@
+{
+  "name": "Project Occupado calculator",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode"
+    }
+  },
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "Desktop in the browser (password: vscode)",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3 python3-tk"
+}
