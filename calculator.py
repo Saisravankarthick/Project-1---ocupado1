@@ -1,4 +1,7 @@
 #Building a calculator in python
+git clone https://github.com/Saisravankarthick/Project-1---ocupado1.git
+cd Project-1---ocupado1
+python calculator.py
 
 import tkinter as tk
 from tkinter import Button
